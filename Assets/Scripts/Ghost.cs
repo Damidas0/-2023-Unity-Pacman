@@ -23,7 +23,6 @@ public class Ghost : MonoBehaviour
         this.scatter= GetComponent<GhostScatter>();
         this.chase = GetComponent<GhostChase>();  
         this.frightened= GetComponent<GhostFrightened>(); 
-
     }
 
     private void Start()
