@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public Transform pellets;
 
     public int ghostMultiplier{get; private set;}
-    public int score{get; private set;} //=> public getteur, private setteur
+    public int score{get; private set;} //=> public getter, private setter
     public int lives{get; private set;} 
 
 
@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     private void Update(){
         if(this.lives <= 0){
             //if q => quit if r => restart
-            if(Input.GetKeyDown("q")){
+            if(Input.GetKeyDown("r")){
                 NewGame();
         
             }//else TODO
@@ -90,19 +90,23 @@ public class GameManager : MonoBehaviour
     public void PelletEaten(Pellet pellet){
         pellet.gameObject.SetActive(false);
         SetScore(this.score + pellet.points);
-
+        
         if(!HasRemainingPellets()) {
+            Debug.Log(true);
             this.pacman.gameObject.SetActive(false);
             Invoke(nameof(NewRound), 3.0f);
         }
     }
     
     public void PowerPelletEaten(PowerPellet pellet){
+
+        for(int i = 0; i < this.ghosts.Length; i++)
+        {
+            if (!this.ghosts[i].frightened.eaten) this.ghosts[i].frightened.Enable(pellet.duration);
+        }
         PelletEaten(pellet);
         CancelInvoke(); // allow to reset timer if 2 power pellets are eaten
         Invoke(nameof(ResetGhostMult), pellet.duration);
-
-        //TODO : Ghost states
     }
 
     private bool HasRemainingPellets(){

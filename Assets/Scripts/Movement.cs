@@ -58,7 +58,7 @@ public class Movement : MonoBehaviour
         this.rigidbody.MovePosition(position + translation);
     }
 
-    //We may want to force sometimes a movement 
+   
     public void SetDirection(Vector2 direction, bool forced = false){
         if(!Occupied(direction)){
             this.direction = direction;
@@ -66,6 +66,11 @@ public class Movement : MonoBehaviour
         }else{
             this.nextDirection = direction;
         }
+    }
+
+    public void setNextDirection(Vector2 nextDirection)
+    {
+        this.nextDirection = nextDirection;
     }
 
     public bool Occupied(Vector2 direction){

@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class GhostChase : GhostBehavior
 {
-    // Start is called before the first frame update
-    void Start()
+    private void OnDisable()
     {
-        
+        /*if (this.onCollisionNode == null)
+        {
+            this.ghost.movement.SetDirection(-this.ghost.movement.direction);
+        }*/
+        ghost.scatter.Enable();
+
     }
 
-    // Update is called once per frame
-    void Update()
+
+
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        
+        this.onCollisionNode= collider.GetComponent<Node>();
+
+        //Activation conditions
+        if (this.onCollisionNode != null && this.enabled && !ghost.frightened.enabled)
+        {
+            this.goToTarget(this.ghost.target);
+        }
     }
 }
